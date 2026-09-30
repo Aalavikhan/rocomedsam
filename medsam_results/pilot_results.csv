@@ -1,0 +1,8 @@
+modality,image,num_masks,runtime_seconds,output
+Angiography,ROCOv2_2023_train_000024.png,16,1.1203889000462368,D:\roco-medsam-test\medsam_results\Angiography\ROCOv2_2023_train_000024_result.png
+Combined,ROCOv2_2023_train_000224.png,3,0.4295084000332281,D:\roco-medsam-test\medsam_results\Combined\ROCOv2_2023_train_000224_result.png
+CT,ROCOv2_2023_train_000001.png,8,0.40919230005238205,D:\roco-medsam-test\medsam_results\CT\ROCOv2_2023_train_000001_result.png
+MRI,ROCOv2_2023_train_000012.png,9,0.436522200005129,D:\roco-medsam-test\medsam_results\MRI\ROCOv2_2023_train_000012_result.png
+PET,ROCOv2_2023_train_000090.png,6,0.3756492000538856,D:\roco-medsam-test\medsam_results\PET\ROCOv2_2023_train_000090_result.png
+Ultrasound,ROCOv2_2023_train_000022.png,7,0.5759245000081137,D:\roco-medsam-test\medsam_results\Ultrasound\ROCOv2_2023_train_000022_result.png
+X-Ray,ROCOv2_2023_train_000032.png,9,0.4412807999178767,D:\roco-medsam-test\medsam_results\X-Ray\ROCOv2_2023_train_000032_result.png
