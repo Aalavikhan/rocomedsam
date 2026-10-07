@@ -1,0 +1,327 @@
+{
+ "_about": "Finding boxes for the 31 preview_v2 images not in teacher_dev_gt.json. HOLDOUT for the segmentation audit (not used for tuning). null = not localizable / nothing to segment. Approximate, annotated visually, not by a radiologist.",
+ "images": [
+  {
+   "image_id": "ROCOv2_2023_train_000040",
+   "arrows": [],
+   "boxes": [
+    [
+     425,
+     100,
+     515,
+     245
+    ]
+   ]
+  },
+  {
+   "image_id": "ROCOv2_2023_train_000056",
+   "arrows": [],
+   "boxes": [
+    [
+     230,
+     140,
+     440,
+     330
+    ]
+   ]
+  },
+  {
+   "image_id": "ROCOv2_2023_train_000110",
+   "arrows": [],
+   "boxes": null
+  },
+  {
+   "image_id": "ROCOv2_2023_train_000187",
+   "arrows": [],
+   "boxes": null
+  },
+  {
+   "image_id": "ROCOv2_2023_train_000196",
+   "arrows": [],
+   "boxes": [
+    [
+     205,
+     245,
+     295,
+     335
+    ]
+   ]
+  },
+  {
+   "image_id": "ROCOv2_2023_train_000228",
+   "arrows": [],
+   "boxes": [
+    [
+     310,
+     205,
+     360,
+     260
+    ]
+   ]
+  },
+  {
+   "image_id": "ROCOv2_2023_train_000355",
+   "arrows": [],
+   "boxes": [
+    [
+     385,
+     285,
+     545,
+     560
+    ]
+   ]
+  },
+  {
+   "image_id": "ROCOv2_2023_train_000379",
+   "arrows": [],
+   "boxes": [
+    [
+     195,
+     440,
+     235,
+     500
+    ],
+    [
+     255,
+     330,
+     305,
+     520
+    ]
+   ]
+  },
+  {
+   "image_id": "ROCOv2_2023_train_000396",
+   "arrows": [],
+   "boxes": [
+    [
+     365,
+     135,
+     425,
+     195
+    ]
+   ]
+  },
+  {
+   "image_id": "ROCOv2_2023_train_000400",
+   "arrows": [],
+   "boxes": [
+    [
+     435,
+     260,
+     468,
+     292
+    ]
+   ]
+  },
+  {
+   "image_id": "ROCOv2_2023_train_000446",
+   "arrows": [],
+   "boxes": null
+  },
+  {
+   "image_id": "ROCOv2_2023_train_000479",
+   "arrows": [],
+   "boxes": null
+  },
+  {
+   "image_id": "ROCOv2_2023_train_000486",
+   "arrows": [],
+   "boxes": [
+    [
+     235,
+     360,
+     305,
+     425
+    ]
+   ]
+  },
+  {
+   "image_id": "ROCOv2_2023_train_000488",
+   "arrows": [],
+   "boxes": [
+    [
+     225,
+     85,
+     340,
+     210
+    ]
+   ]
+  },
+  {
+   "image_id": "ROCOv2_2023_train_000489",
+   "arrows": [],
+   "boxes": null
+  },
+  {
+   "image_id": "ROCOv2_2023_train_000492",
+   "arrows": [],
+   "boxes": [
+    [
+     190,
+     100,
+     220,
+     300
+    ]
+   ]
+  },
+  {
+   "image_id": "ROCOv2_2023_train_000524",
+   "arrows": [],
+   "boxes": [
+    [
+     255,
+     100,
+     310,
+     170
+    ]
+   ]
+  },
+  {
+   "image_id": "ROCOv2_2023_train_000547",
+   "arrows": [],
+   "boxes": [
+    [
+     105,
+     365,
+     205,
+     435
+    ]
+   ]
+  },
+  {
+   "image_id": "ROCOv2_2023_train_000561",
+   "arrows": [],
+   "boxes": [
+    [
+     170,
+     240,
+     490,
+     520
+    ]
+   ]
+  },
+  {
+   "image_id": "ROCOv2_2023_train_000598",
+   "arrows": [],
+   "boxes": [
+    [
+     312,
+     100,
+     368,
+     155
+    ]
+   ]
+  },
+  {
+   "image_id": "ROCOv2_2023_train_000662",
+   "arrows": [],
+   "boxes": [
+    [
+     200,
+     340,
+     235,
+     372
+    ]
+   ]
+  },
+  {
+   "image_id": "ROCOv2_2023_train_000677",
+   "arrows": [],
+   "boxes": [
+    [
+     330,
+     100,
+     415,
+     195
+    ]
+   ]
+  },
+  {
+   "image_id": "ROCOv2_2023_train_000744",
+   "arrows": [],
+   "boxes": [
+    [
+     160,
+     90,
+     215,
+     145
+    ]
+   ]
+  },
+  {
+   "image_id": "ROCOv2_2023_train_000767",
+   "arrows": [],
+   "boxes": [
+    [
+     305,
+     335,
+     450,
+     545
+    ]
+   ]
+  },
+  {
+   "image_id": "ROCOv2_2023_train_000792",
+   "arrows": [],
+   "boxes": [
+    [
+     130,
+     200,
+     240,
+     305
+    ]
+   ]
+  },
+  {
+   "image_id": "ROCOv2_2023_train_000810",
+   "arrows": [],
+   "boxes": [
+    [
+     280,
+     340,
+     350,
+     425
+    ]
+   ]
+  },
+  {
+   "image_id": "ROCOv2_2023_train_000930",
+   "arrows": [],
+   "boxes": null
+  },
+  {
+   "image_id": "ROCOv2_2023_train_000953",
+   "arrows": [],
+   "boxes": null
+  },
+  {
+   "image_id": "ROCOv2_2023_train_000957",
+   "arrows": [],
+   "boxes": [
+    [
+     180,
+     80,
+     330,
+     230
+    ]
+   ]
+  },
+  {
+   "image_id": "ROCOv2_2023_train_000961",
+   "arrows": [],
+   "boxes": null
+  },
+  {
+   "image_id": "ROCOv2_2023_train_001090",
+   "arrows": [],
+   "boxes": [
+    [
+     325,
+     645,
+     385,
+     705
+    ]
+   ]
+  }
+ ]
+}

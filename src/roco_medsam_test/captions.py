@@ -64,6 +64,24 @@ _TAIL_STOP = {"and", "with", "which", "that", "is", "was", "are", "were", "showi
               "on", "by", "to", "from", "after", "before", "during", "for"}
 
 
+_ARROW_COLORS = {
+    "colored": r"red|yellow|green|blue|orange|pink|purple|cyan|magenta",
+    "white": r"white",
+    "black": r"black",
+}
+
+
+def arrow_hints(caption: str):
+    """What the caption says about its arrows: dict(colors, max_n).
+    colors: channels named right before 'arrow(head)', e.g. "red arrow" -> {"colored"}; None = unknown.
+    max_n: how many arrows to keep (singular 'arrow' -> 2, plural or several colours -> 6)."""
+    low = caption.lower() if isinstance(caption, str) else ""
+    colors = {c for c, p in _ARROW_COLORS.items()
+              if re.search(r"\b(?:" + p + r")\b[^.;,()]{0,25}\barrow", low)}
+    plural = bool(re.search(r"\barrow(?:head)?s\b", low)) or len(re.findall(r"\barrow", low)) > 1
+    return {"colors": colors or None, "max_n": 6 if plural or len(colors) > 1 else 2}
+
+
 def detect_modality(caption: str):
     """Single modality or None. Captions that mention several modalities are ambiguous -> None."""
     low = caption.lower()

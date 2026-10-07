@@ -1,0 +1,405 @@
+{
+ "_about": "Holdout arrow tips: all 25 marked-caption ROCOv2 validation findings. NOT used for tuning arrows.py.",
+ "images": [
+  {
+   "image_id": "ROCOv2_2023_valid_000007",
+   "split": "validation",
+   "arrows": [
+    {
+     "tip": [
+      283,
+      258
+     ],
+     "type": "line"
+    }
+   ]
+  },
+  {
+   "image_id": "ROCOv2_2023_valid_000023",
+   "split": "validation",
+   "arrows": [
+    {
+     "tip": [
+      138,
+      200
+     ],
+     "type": "block"
+    },
+    {
+     "tip": [
+      225,
+      252
+     ],
+     "type": "head"
+    }
+   ]
+  },
+  {
+   "image_id": "ROCOv2_2023_valid_000035",
+   "split": "validation",
+   "arrows": []
+  },
+  {
+   "image_id": "ROCOv2_2023_valid_000036",
+   "split": "validation",
+   "arrows": [
+    {
+     "tip": [
+      145,
+      225
+     ],
+     "type": "block"
+    },
+    {
+     "tip": [
+      92,
+      330
+     ],
+     "type": "block"
+    },
+    {
+     "tip": [
+      70,
+      493
+     ],
+     "type": "line"
+    },
+    {
+     "tip": [
+      667,
+      428
+     ],
+     "type": "line"
+    }
+   ]
+  },
+  {
+   "image_id": "ROCOv2_2023_valid_000037",
+   "split": "validation",
+   "arrows": [
+    {
+     "tip": [
+      100,
+      230
+     ],
+     "type": "block"
+    },
+    {
+     "tip": [
+      115,
+      330
+     ],
+     "type": "block"
+    },
+    {
+     "tip": [
+      275,
+      442
+     ],
+     "type": "block"
+    },
+    {
+     "tip": [
+      570,
+      85
+     ],
+     "type": "block"
+    }
+   ]
+  },
+  {
+   "image_id": "ROCOv2_2023_valid_000051",
+   "split": "validation",
+   "arrows": [
+    {
+     "tip": [
+      150,
+      315
+     ],
+     "type": "block"
+    }
+   ]
+  },
+  {
+   "image_id": "ROCOv2_2023_valid_000052",
+   "split": "validation",
+   "arrows": [
+    {
+     "tip": [
+      165,
+      278
+     ],
+     "type": "block"
+    }
+   ]
+  },
+  {
+   "image_id": "ROCOv2_2023_valid_000053",
+   "split": "validation",
+   "arrows": [
+    {
+     "tip": [
+      200,
+      275
+     ],
+     "type": "block"
+    }
+   ]
+  },
+  {
+   "image_id": "ROCOv2_2023_valid_000054",
+   "split": "validation",
+   "arrows": []
+  },
+  {
+   "image_id": "ROCOv2_2023_valid_000055",
+   "split": "validation",
+   "arrows": [
+    {
+     "tip": [
+      325,
+      570
+     ],
+     "type": "head"
+    }
+   ]
+  },
+  {
+   "image_id": "ROCOv2_2023_valid_000056",
+   "split": "validation",
+   "arrows": [
+    {
+     "tip": [
+      390,
+      405
+     ],
+     "type": "block"
+    }
+   ]
+  },
+  {
+   "image_id": "ROCOv2_2023_valid_000062",
+   "split": "validation",
+   "arrows": [
+    {
+     "tip": [
+      310,
+      312
+     ],
+     "type": "line"
+    },
+    {
+     "tip": [
+      280,
+      330
+     ],
+     "type": "head"
+    }
+   ]
+  },
+  {
+   "image_id": "ROCOv2_2023_valid_000067",
+   "split": "validation",
+   "arrows": [
+    {
+     "tip": [
+      297,
+      110
+     ],
+     "type": "block"
+    },
+    {
+     "tip": [
+      232,
+      293
+     ],
+     "type": "block"
+    },
+    {
+     "tip": [
+      125,
+      300
+     ],
+     "type": "block"
+    },
+    {
+     "tip": [
+      118,
+      458
+     ],
+     "type": "block"
+    }
+   ]
+  },
+  {
+   "image_id": "ROCOv2_2023_valid_000075",
+   "split": "validation",
+   "arrows": [
+    {
+     "tip": [
+      223,
+      278
+     ],
+     "type": "line"
+    }
+   ]
+  },
+  {
+   "image_id": "ROCOv2_2023_valid_000077",
+   "split": "validation",
+   "arrows": [
+    {
+     "tip": [
+      548,
+      430
+     ],
+     "type": "block"
+    }
+   ]
+  },
+  {
+   "image_id": "ROCOv2_2023_valid_000097",
+   "split": "validation",
+   "arrows": [
+    {
+     "tip": [
+      530,
+      412
+     ],
+     "type": "block"
+    }
+   ]
+  },
+  {
+   "image_id": "ROCOv2_2023_valid_000114",
+   "split": "validation",
+   "arrows": [
+    {
+     "tip": [
+      487,
+      80
+     ],
+     "type": "block"
+    },
+    {
+     "tip": [
+      528,
+      262
+     ],
+     "type": "block"
+    }
+   ]
+  },
+  {
+   "image_id": "ROCOv2_2023_valid_000123",
+   "split": "validation",
+   "arrows": [
+    {
+     "tip": [
+      628,
+      490
+     ],
+     "type": "block"
+    }
+   ]
+  },
+  {
+   "image_id": "ROCOv2_2023_valid_000129",
+   "split": "validation",
+   "arrows": [
+    {
+     "tip": [
+      228,
+      157
+     ],
+     "type": "block"
+    }
+   ]
+  },
+  {
+   "image_id": "ROCOv2_2023_valid_000141",
+   "split": "validation",
+   "arrows": [
+    {
+     "tip": [
+      212,
+      307
+     ],
+     "type": "block"
+    }
+   ]
+  },
+  {
+   "image_id": "ROCOv2_2023_valid_000142",
+   "split": "validation",
+   "arrows": [
+    {
+     "tip": [
+      285,
+      186
+     ],
+     "type": "line"
+    }
+   ]
+  },
+  {
+   "image_id": "ROCOv2_2023_valid_000143",
+   "split": "validation",
+   "arrows": [
+    {
+     "tip": [
+      232,
+      131
+     ],
+     "type": "line"
+    }
+   ]
+  },
+  {
+   "image_id": "ROCOv2_2023_valid_000144",
+   "split": "validation",
+   "arrows": [
+    {
+     "tip": [
+      246,
+      262
+     ],
+     "type": "line"
+    },
+    {
+     "tip": [
+      296,
+      332
+     ],
+     "type": "line"
+    }
+   ]
+  },
+  {
+   "image_id": "ROCOv2_2023_valid_000148",
+   "split": "validation",
+   "arrows": [
+    {
+     "tip": [
+      220,
+      262
+     ],
+     "type": "block"
+    }
+   ]
+  },
+  {
+   "image_id": "ROCOv2_2023_valid_000150",
+   "split": "validation",
+   "arrows": [
+    {
+     "tip": [
+      190,
+      328
+     ],
+     "type": "block"
+    }
+   ]
+  }
+ ]
+}

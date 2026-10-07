@@ -28,7 +28,7 @@ from PIL import Image
 from tqdm import tqdm
 
 from roco_medsam_test.common import PSEUDO_DIR, ROCO_DIR, load_rgb, rel, set_seed
-from roco_medsam_test.teacher import Teacher
+from roco_medsam_test.teacher import CLIP_METHOD, Teacher
 
 COLS = ["image_id", "split", "kind", "modality", "phrase", "status", "sam_iou", "heat_in", "heat_peak",
         "area_frac", "clip_margin", "crop_gain", "weight", "n_arrows", "arrow_used",
@@ -46,7 +46,7 @@ def save_preview(path, img, res, title):
     base = res["clean_img"] if res.get("clean_img") is not None else img
     ax[1].imshow(base)
     ax[1].imshow(res["heat"], alpha=0.5, cmap="jet")
-    ax[1].set_title(f"text-derived heat | peak={res['heat_peak']:.2f}")
+    ax[1].set_title(f"text-derived heat | raw peak={res['heat_peak']:.3f}")
     ov = base.copy().astype(np.float32) / 255
     ov[res["mask"]] = 0.55 * ov[res["mask"]] + 0.45 * np.array([1, 0, 0])
     ax[2].imshow(ov)
@@ -65,9 +65,12 @@ def main():
     ap.add_argument("--limit", type=int, default=0)
     ap.add_argument("--preview", type=int, default=0, help="save N overlays and exit (no manifest)")
     ap.add_argument("--only_marked", action="store_true", help="preview only captions that mention arrows/asterisks/circles")
+    ap.add_argument("--preview_dir", default="preview", help="preview output folder under data/pseudo/")
     ap.add_argument("--cover_pow", type=float, default=0.15, help="higher -> larger masks preferred; 0 = tightest")
     ap.add_argument("--max_area", type=float, default=0.35, help="reject candidate masks larger than this fraction of the image")
     ap.add_argument("--no_arrows", action="store_true", help="disable arrow detection")
+    ap.add_argument("--clip_method", default=CLIP_METHOD,
+                    help='dense heatmap method, e.g. "sclip@448/diff" (default) or "maskclip@224/softmax" (old)')
     args = ap.parse_args()
 
     set_seed(0)
@@ -82,8 +85,10 @@ def main():
     (pdir / "images_clean").mkdir(parents=True, exist_ok=True)
     man_path = PSEUDO_DIR / f"manifest_{args.split}.csv"
 
+    no_mask = []
     if args.preview:
-        (PSEUDO_DIR / "preview").mkdir(parents=True, exist_ok=True)
+        prev_dir = PSEUDO_DIR / args.preview_dir
+        prev_dir.mkdir(parents=True, exist_ok=True)
         f = meta[meta.kind == "finding"]
         if args.only_marked:
             f = f[f.marked.str.lower() == "true"]
@@ -92,7 +97,7 @@ def main():
     if man_path.exists() and not args.preview:
         done = set(pd.read_csv(man_path, dtype=str, keep_default_na=False).image_id)
 
-    teacher = Teacher(device, cover_pow=args.cover_pow, max_area=args.max_area)
+    teacher = Teacher(device, cover_pow=args.cover_pow, max_area=args.max_area, clip_method=args.clip_method)
     buf = []
 
     def flush():
@@ -117,7 +122,8 @@ def main():
             img = load_rgb(img_path)
             marked = str(getattr(r, "marked", "")).lower() == "true"
             try:
-                res = teacher.run(img, r.phrase, r.modality, marked=marked, use_arrows=not args.no_arrows)
+                res = teacher.run(img, r.phrase, r.modality, marked=marked, use_arrows=not args.no_arrows,
+                                  caption=r.caption, term=getattr(r, "term", ""))
                 err = False
             except Exception as e:  # keep the long run alive, but record it
                 print(f"\n{iid}: {e}")
@@ -125,9 +131,11 @@ def main():
             if res is None:
                 row.update(status="error" if err else "no_candidate")
                 buf.append(row)
+                if args.preview:
+                    no_mask.append(f"{iid}  [{row['status']}]  {r.modality} | {r.phrase}")
             else:
                 if args.preview:
-                    save_preview(PSEUDO_DIR / "preview" / f"{iid}.png", img, res,
+                    save_preview(prev_dir / f"{iid}.png", img, res,
                                  f"{r.modality} | {r.phrase} | {r.caption}")
                     continue
                 mp, hp = pdir / "masks" / f"{iid}.png", pdir / "heat" / f"{iid}.npy"
@@ -151,7 +159,10 @@ def main():
     flush()
 
     if args.preview:
-        print(f"\nOverlays in {PSEUDO_DIR/'preview'}. Look at them before the full run.")
+        print(f"\n{len(meta) - len(no_mask)}/{len(meta)} overlays in {prev_dir}. Look at them before the full run.")
+        if no_mask:   # these produce no overlay, so list them instead of hiding them
+            print(f"No mask for {len(no_mask)} image(s):\n  " + "\n  ".join(no_mask))
+            (prev_dir / "no_mask.txt").write_text("\n".join(no_mask) + "\n")
     else:
         m = pd.read_csv(man_path, dtype=str, keep_default_na=False)
         print(m.status.value_counts())

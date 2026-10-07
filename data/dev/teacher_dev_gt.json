@@ -1,0 +1,1440 @@
+{
+ "_about": "Hand-made dev ground truth for auditing the teacher (arrow detector + text heatmap). 64 ROCOv2 train images (48 marked captions, 16 unmarked). arrows: tip (x,y) in image pixels + type (block=filled shaft+head, line=thin shaft+head, head=triangle only, chevron=open V, hollow=outlined). boxes: rough extent of the finding the caption/arrow refers to (null = diffuse or not localizable). Approximate (+-10px); annotated visually, not by a radiologist. Do not use for student evaluation.",
+ "images": [
+  {
+   "image_id": "ROCOv2_2023_train_000536",
+   "arrows": [
+    {
+     "tip": [
+      283,
+      295
+     ],
+     "type": "line"
+    },
+    {
+     "tip": [
+      225,
+      180
+     ],
+     "type": "head"
+    }
+   ],
+   "boxes": [
+    [
+     280,
+     255,
+     345,
+     320
+    ]
+   ]
+  },
+  {
+   "image_id": "ROCOv2_2023_train_000628",
+   "arrows": [
+    {
+     "tip": [
+      372,
+      218
+     ],
+     "type": "line"
+    },
+    {
+     "tip": [
+      383,
+      346
+     ],
+     "type": "line"
+    },
+    {
+     "tip": [
+      306,
+      258
+     ],
+     "type": "head"
+    },
+    {
+     "tip": [
+      311,
+      276
+     ],
+     "type": "head"
+    }
+   ],
+   "boxes": [
+    [
+     290,
+     200,
+     410,
+     350
+    ]
+   ]
+  },
+  {
+   "image_id": "ROCOv2_2023_train_000250",
+   "arrows": [
+    {
+     "tip": [
+      90,
+      222
+     ],
+     "type": "block"
+    },
+    {
+     "tip": [
+      88,
+      327
+     ],
+     "type": "block"
+    },
+    {
+     "tip": [
+      567,
+      218
+     ],
+     "type": "block"
+    },
+    {
+     "tip": [
+      562,
+      293
+     ],
+     "type": "block"
+    },
+    {
+     "tip": [
+      594,
+      368
+     ],
+     "type": "block"
+    },
+    {
+     "tip": [
+      614,
+      145
+     ],
+     "type": "hollow"
+    }
+   ],
+   "boxes": [
+    [
+     60,
+     180,
+     250,
+     400
+    ],
+    [
+     400,
+     180,
+     580,
+     400
+    ]
+   ]
+  },
+  {
+   "image_id": "ROCOv2_2023_train_000671",
+   "arrows": [
+    {
+     "tip": [
+      163,
+      255
+     ],
+     "type": "line"
+    }
+   ],
+   "boxes": [
+    [
+     160,
+     225,
+     215,
+     280
+    ]
+   ]
+  },
+  {
+   "image_id": "ROCOv2_2023_train_000715",
+   "arrows": [
+    {
+     "tip": [
+      405,
+      455
+     ],
+     "type": "line"
+    }
+   ],
+   "boxes": [
+    [
+     350,
+     330,
+     420,
+     460
+    ]
+   ]
+  },
+  {
+   "image_id": "ROCOv2_2023_train_000546",
+   "arrows": [
+    {
+     "tip": [
+      120,
+      390
+     ],
+     "type": "block"
+    }
+   ],
+   "boxes": [
+    [
+     120,
+     365,
+     210,
+     430
+    ]
+   ]
+  },
+  {
+   "image_id": "ROCOv2_2023_train_001009",
+   "arrows": [
+    {
+     "tip": [
+      255,
+      130
+     ],
+     "type": "block"
+    },
+    {
+     "tip": [
+      340,
+      130
+     ],
+     "type": "block"
+    }
+   ],
+   "boxes": [
+    [
+     240,
+     120,
+     360,
+     190
+    ]
+   ]
+  },
+  {
+   "image_id": "ROCOv2_2023_train_000857",
+   "arrows": [
+    {
+     "tip": [
+      370,
+      268
+     ],
+     "type": "block"
+    },
+    {
+     "tip": [
+      310,
+      368
+     ],
+     "type": "head"
+    }
+   ],
+   "boxes": [
+    [
+     290,
+     230,
+     370,
+     320
+    ]
+   ]
+  },
+  {
+   "image_id": "ROCOv2_2023_train_000333",
+   "arrows": [
+    {
+     "tip": [
+      230,
+      410
+     ],
+     "type": "block"
+    },
+    {
+     "tip": [
+      293,
+      450
+     ],
+     "type": "block"
+    },
+    {
+     "tip": [
+      290,
+      503
+     ],
+     "type": "block"
+    }
+   ],
+   "boxes": [
+    [
+     220,
+     380,
+     320,
+     520
+    ]
+   ]
+  },
+  {
+   "image_id": "ROCOv2_2023_train_000695",
+   "arrows": [
+    {
+     "tip": [
+      310,
+      88
+     ],
+     "type": "block"
+    },
+    {
+     "tip": [
+      240,
+      628
+     ],
+     "type": "block"
+    }
+   ],
+   "boxes": [
+    [
+     300,
+     50,
+     390,
+     125
+    ],
+    [
+     235,
+     590,
+     330,
+     680
+    ]
+   ]
+  },
+  {
+   "image_id": "ROCOv2_2023_train_000147",
+   "arrows": [
+    {
+     "tip": [
+      375,
+      205
+     ],
+     "type": "line"
+    }
+   ],
+   "boxes": [
+    [
+     370,
+     180,
+     430,
+     230
+    ]
+   ]
+  },
+  {
+   "image_id": "ROCOv2_2023_train_000711",
+   "arrows": [
+    {
+     "tip": [
+      290,
+      322
+     ],
+     "type": "block"
+    },
+    {
+     "tip": [
+      400,
+      290
+     ],
+     "type": "head"
+    },
+    {
+     "tip": [
+      410,
+      418
+     ],
+     "type": "head"
+    }
+   ],
+   "boxes": [
+    [
+     300,
+     290,
+     500,
+     440
+    ]
+   ]
+  },
+  {
+   "image_id": "ROCOv2_2023_train_001008",
+   "arrows": [
+    {
+     "tip": [
+      280,
+      348
+     ],
+     "type": "chevron"
+    },
+    {
+     "tip": [
+      165,
+      445
+     ],
+     "type": "chevron"
+    }
+   ],
+   "boxes": [
+    [
+     240,
+     300,
+     300,
+     380
+    ],
+    [
+     120,
+     380,
+     220,
+     480
+    ]
+   ]
+  },
+  {
+   "image_id": "ROCOv2_2023_train_000343",
+   "arrows": [
+    {
+     "tip": [
+      418,
+      42
+     ],
+     "type": "hollow"
+    },
+    {
+     "tip": [
+      445,
+      333
+     ],
+     "type": "hollow"
+    }
+   ],
+   "boxes": [
+    [
+     400,
+     330,
+     500,
+     385
+    ]
+   ]
+  },
+  {
+   "image_id": "ROCOv2_2023_train_000868",
+   "arrows": [
+    {
+     "tip": [
+      335,
+      345
+     ],
+     "type": "line"
+    }
+   ],
+   "boxes": [
+    [
+     320,
+     300,
+     380,
+     360
+    ]
+   ]
+  },
+  {
+   "image_id": "ROCOv2_2023_train_000938",
+   "arrows": [
+    {
+     "tip": [
+      272,
+      98
+     ],
+     "type": "block"
+    }
+   ],
+   "boxes": [
+    [
+     200,
+     90,
+     300,
+     150
+    ]
+   ]
+  },
+  {
+   "image_id": "ROCOv2_2023_train_000105",
+   "arrows": [
+    {
+     "tip": [
+      490,
+      205
+     ],
+     "type": "block"
+    }
+   ],
+   "boxes": [
+    [
+     440,
+     210,
+     560,
+     340
+    ]
+   ]
+  },
+  {
+   "image_id": "ROCOv2_2023_train_000631",
+   "arrows": [
+    {
+     "tip": [
+      192,
+      132
+     ],
+     "type": "line"
+    },
+    {
+     "tip": [
+      220,
+      172
+     ],
+     "type": "line"
+    }
+   ],
+   "boxes": [
+    [
+     175,
+     120,
+     230,
+     180
+    ]
+   ]
+  },
+  {
+   "image_id": "ROCOv2_2023_train_000647",
+   "arrows": [
+    {
+     "tip": [
+      165,
+      103
+     ],
+     "type": "block"
+    },
+    {
+     "tip": [
+      150,
+      147
+     ],
+     "type": "block"
+    },
+    {
+     "tip": [
+      93,
+      212
+     ],
+     "type": "block"
+    },
+    {
+     "tip": [
+      283,
+      210
+     ],
+     "type": "block"
+    }
+   ],
+   "boxes": null
+  },
+  {
+   "image_id": "ROCOv2_2023_train_000730",
+   "arrows": [
+    {
+     "tip": [
+      255,
+      302
+     ],
+     "type": "line"
+    }
+   ],
+   "boxes": [
+    [
+     240,
+     270,
+     290,
+     320
+    ]
+   ]
+  },
+  {
+   "image_id": "ROCOv2_2023_train_001088",
+   "arrows": [
+    {
+     "tip": [
+      248,
+      165
+     ],
+     "type": "block"
+    },
+    {
+     "tip": [
+      112,
+      252
+     ],
+     "type": "block"
+    },
+    {
+     "tip": [
+      273,
+      262
+     ],
+     "type": "block"
+    }
+   ],
+   "boxes": [
+    [
+     225,
+     140,
+     290,
+     200
+    ],
+    [
+     90,
+     230,
+     150,
+     290
+    ],
+    [
+     240,
+     240,
+     300,
+     300
+    ]
+   ]
+  },
+  {
+   "image_id": "ROCOv2_2023_train_000308",
+   "arrows": [
+    {
+     "tip": [
+      330,
+      112
+     ],
+     "type": "block"
+    },
+    {
+     "tip": [
+      530,
+      205
+     ],
+     "type": "block"
+    }
+   ],
+   "boxes": [
+    [
+     290,
+     110,
+     370,
+     160
+    ],
+    [
+     480,
+     205,
+     570,
+     270
+    ]
+   ]
+  },
+  {
+   "image_id": "ROCOv2_2023_train_001057",
+   "arrows": [
+    {
+     "tip": [
+      115,
+      203
+     ],
+     "type": "block"
+    }
+   ],
+   "boxes": [
+    [
+     80,
+     170,
+     120,
+     260
+    ]
+   ]
+  },
+  {
+   "image_id": "ROCOv2_2023_train_000824",
+   "arrows": [
+    {
+     "tip": [
+      153,
+      112
+     ],
+     "type": "chevron"
+    },
+    {
+     "tip": [
+      163,
+      110
+     ],
+     "type": "chevron"
+    },
+    {
+     "tip": [
+      174,
+      109
+     ],
+     "type": "chevron"
+    },
+    {
+     "tip": [
+      185,
+      107
+     ],
+     "type": "chevron"
+    }
+   ],
+   "boxes": [
+    [
+     185,
+     90,
+     240,
+     130
+    ]
+   ]
+  },
+  {
+   "image_id": "ROCOv2_2023_train_000451",
+   "arrows": [
+    {
+     "tip": [
+      248,
+      168
+     ],
+     "type": "block"
+    }
+   ],
+   "boxes": [
+    [
+     205,
+     160,
+     255,
+     210
+    ]
+   ]
+  },
+  {
+   "image_id": "ROCOv2_2023_train_000076",
+   "arrows": [],
+   "boxes": [
+    [
+     270,
+     150,
+     500,
+     390
+    ]
+   ]
+  },
+  {
+   "image_id": "ROCOv2_2023_train_000222",
+   "arrows": [
+    {
+     "tip": [
+      262,
+      148
+     ],
+     "type": "line"
+    }
+   ],
+   "boxes": [
+    [
+     225,
+     125,
+     270,
+     185
+    ]
+   ]
+  },
+  {
+   "image_id": "ROCOv2_2023_train_000340",
+   "arrows": [
+    {
+     "tip": [
+      300,
+      200
+     ],
+     "type": "line"
+    }
+   ],
+   "boxes": [
+    [
+     285,
+     185,
+     345,
+     225
+    ]
+   ]
+  },
+  {
+   "image_id": "ROCOv2_2023_train_000641",
+   "arrows": [
+    {
+     "tip": [
+      432,
+      402
+     ],
+     "type": "chevron"
+    },
+    {
+     "tip": [
+      483,
+      380
+     ],
+     "type": "chevron"
+    },
+    {
+     "tip": [
+      515,
+      404
+     ],
+     "type": "chevron"
+    },
+    {
+     "tip": [
+      515,
+      470
+     ],
+     "type": "chevron"
+    },
+    {
+     "tip": [
+      510,
+      510
+     ],
+     "type": "chevron"
+    },
+    {
+     "tip": [
+      490,
+      545
+     ],
+     "type": "chevron"
+    }
+   ],
+   "boxes": [
+    [
+     440,
+     400,
+     510,
+     540
+    ]
+   ]
+  },
+  {
+   "image_id": "ROCOv2_2023_train_000563",
+   "arrows": [
+    {
+     "tip": [
+      520,
+      160
+     ],
+     "type": "block"
+    }
+   ],
+   "boxes": [
+    [
+     460,
+     120,
+     520,
+     175
+    ]
+   ]
+  },
+  {
+   "image_id": "ROCOv2_2023_train_000542",
+   "arrows": [
+    {
+     "tip": [
+      182,
+      245
+     ],
+     "type": "block"
+    }
+   ],
+   "boxes": [
+    [
+     150,
+     245,
+     230,
+     310
+    ]
+   ]
+  },
+  {
+   "image_id": "ROCOv2_2023_train_000818",
+   "arrows": [
+    {
+     "tip": [
+      242,
+      275
+     ],
+     "type": "line"
+    }
+   ],
+   "boxes": [
+    [
+     245,
+     240,
+     330,
+     330
+    ]
+   ]
+  },
+  {
+   "image_id": "ROCOv2_2023_train_000549",
+   "arrows": [
+    {
+     "tip": [
+      178,
+      272
+     ],
+     "type": "head"
+    }
+   ],
+   "boxes": [
+    [
+     320,
+     150,
+     560,
+     470
+    ]
+   ]
+  },
+  {
+   "image_id": "ROCOv2_2023_train_000200",
+   "arrows": [
+    {
+     "tip": [
+      158,
+      345
+     ],
+     "type": "head"
+    },
+    {
+     "tip": [
+      480,
+      298
+     ],
+     "type": "head"
+    },
+    {
+     "tip": [
+      530,
+      310
+     ],
+     "type": "head"
+    }
+   ],
+   "boxes": [
+    [
+     440,
+     300,
+     550,
+     420
+    ]
+   ]
+  },
+  {
+   "image_id": "ROCOv2_2023_train_000759",
+   "arrows": [
+    {
+     "tip": [
+      157,
+      273
+     ],
+     "type": "line"
+    },
+    {
+     "tip": [
+      168,
+      343
+     ],
+     "type": "line"
+    },
+    {
+     "tip": [
+      213,
+      334
+     ],
+     "type": "line"
+    },
+    {
+     "tip": [
+      360,
+      295
+     ],
+     "type": "line"
+    },
+    {
+     "tip": [
+      478,
+      272
+     ],
+     "type": "block"
+    }
+   ],
+   "boxes": [
+    [
+     150,
+     250,
+     240,
+     330
+    ],
+    [
+     330,
+     250,
+     420,
+     320
+    ]
+   ]
+  },
+  {
+   "image_id": "ROCOv2_2023_train_000543",
+   "arrows": [
+    {
+     "tip": [
+      192,
+      245
+     ],
+     "type": "line"
+    }
+   ],
+   "boxes": [
+    [
+     160,
+     240,
+     240,
+     320
+    ]
+   ]
+  },
+  {
+   "image_id": "ROCOv2_2023_train_000353",
+   "arrows": [
+    {
+     "tip": [
+      318,
+      315
+     ],
+     "type": "line"
+    }
+   ],
+   "boxes": [
+    [
+     310,
+     300,
+     345,
+     325
+    ]
+   ]
+  },
+  {
+   "image_id": "ROCOv2_2023_train_000979",
+   "arrows": [
+    {
+     "tip": [
+      248,
+      248
+     ],
+     "type": "line"
+    }
+   ],
+   "boxes": [
+    [
+     230,
+     190,
+     270,
+     250
+    ]
+   ]
+  },
+  {
+   "image_id": "ROCOv2_2023_train_000447",
+   "arrows": [],
+   "boxes": null
+  },
+  {
+   "image_id": "ROCOv2_2023_train_000548",
+   "arrows": [
+    {
+     "tip": [
+      128,
+      307
+     ],
+     "type": "block"
+    }
+   ],
+   "boxes": [
+    [
+     115,
+     280,
+     190,
+     350
+    ]
+   ]
+  },
+  {
+   "image_id": "ROCOv2_2023_train_001027",
+   "arrows": [
+    {
+     "tip": [
+      425,
+      352
+     ],
+     "type": "block"
+    }
+   ],
+   "boxes": null
+  },
+  {
+   "image_id": "ROCOv2_2023_train_000254",
+   "arrows": [
+    {
+     "tip": [
+      215,
+      340
+     ],
+     "type": "block"
+    }
+   ],
+   "boxes": [
+    [
+     210,
+     330,
+     320,
+     445
+    ]
+   ]
+  },
+  {
+   "image_id": "ROCOv2_2023_train_000418",
+   "arrows": [
+    {
+     "tip": [
+      575,
+      250
+     ],
+     "type": "block"
+    },
+    {
+     "tip": [
+      535,
+      280
+     ],
+     "type": "block"
+    }
+   ],
+   "boxes": [
+    [
+     470,
+     200,
+     580,
+     300
+    ]
+   ]
+  },
+  {
+   "image_id": "ROCOv2_2023_train_000485",
+   "arrows": [
+    {
+     "tip": [
+      565,
+      380
+     ],
+     "type": "block"
+    }
+   ],
+   "boxes": [
+    [
+     495,
+     345,
+     560,
+     415
+    ]
+   ]
+  },
+  {
+   "image_id": "ROCOv2_2023_train_000884",
+   "arrows": [
+    {
+     "tip": [
+      318,
+      195
+     ],
+     "type": "block"
+    }
+   ],
+   "boxes": [
+    [
+     300,
+     180,
+     345,
+     230
+    ]
+   ]
+  },
+  {
+   "image_id": "ROCOv2_2023_train_000133",
+   "arrows": [
+    {
+     "tip": [
+      445,
+      346
+     ],
+     "type": "block"
+    }
+   ],
+   "boxes": [
+    [
+     380,
+     320,
+     440,
+     380
+    ]
+   ]
+  },
+  {
+   "image_id": "ROCOv2_2023_train_000994",
+   "arrows": [
+    {
+     "tip": [
+      405,
+      325
+     ],
+     "type": "line"
+    },
+    {
+     "tip": [
+      385,
+      467
+     ],
+     "type": "line"
+    }
+   ],
+   "boxes": [
+    [
+     360,
+     440,
+     410,
+     490
+    ]
+   ]
+  },
+  {
+   "image_id": "ROCOv2_2023_train_000186",
+   "arrows": [
+    {
+     "tip": [
+      238,
+      342
+     ],
+     "type": "block"
+    },
+    {
+     "tip": [
+      228,
+      367
+     ],
+     "type": "block"
+    },
+    {
+     "tip": [
+      243,
+      402
+     ],
+     "type": "block"
+    }
+   ],
+   "boxes": [
+    [
+     235,
+     330,
+     300,
+     410
+    ]
+   ]
+  },
+  {
+   "image_id": "ROCOv2_2023_train_000619",
+   "arrows": [],
+   "boxes": [
+    [
+     60,
+     100,
+     320,
+     640
+    ]
+   ]
+  },
+  {
+   "image_id": "ROCOv2_2023_train_000394",
+   "arrows": [],
+   "boxes": null
+  },
+  {
+   "image_id": "ROCOv2_2023_train_000419",
+   "arrows": [],
+   "boxes": [
+    [
+     120,
+     200,
+     330,
+     600
+    ],
+    [
+     370,
+     190,
+     600,
+     560
+    ]
+   ]
+  },
+  {
+   "image_id": "ROCOv2_2023_train_000956",
+   "arrows": [],
+   "boxes": null
+  },
+  {
+   "image_id": "ROCOv2_2023_train_000025",
+   "arrows": [],
+   "boxes": [
+    [
+     280,
+     200,
+     380,
+     320
+    ]
+   ]
+  },
+  {
+   "image_id": "ROCOv2_2023_train_000421",
+   "arrows": [],
+   "boxes": [
+    [
+     230,
+     150,
+     320,
+     220
+    ]
+   ]
+  },
+  {
+   "image_id": "ROCOv2_2023_train_000472",
+   "arrows": [],
+   "boxes": null
+  },
+  {
+   "image_id": "ROCOv2_2023_train_000063",
+   "arrows": [],
+   "boxes": [
+    [
+     330,
+     240,
+     410,
+     340
+    ]
+   ]
+  },
+  {
+   "image_id": "ROCOv2_2023_train_000639",
+   "arrows": [],
+   "boxes": [
+    [
+     140,
+     420,
+     240,
+     520
+    ]
+   ]
+  },
+  {
+   "image_id": "ROCOv2_2023_train_000410",
+   "arrows": [],
+   "boxes": [
+    [
+     30,
+     280,
+     240,
+     520
+    ]
+   ]
+  },
+  {
+   "image_id": "ROCOv2_2023_train_000012",
+   "arrows": [],
+   "boxes": null
+  },
+  {
+   "image_id": "ROCOv2_2023_train_000728",
+   "arrows": [],
+   "boxes": [
+    [
+     85,
+     290,
+     120,
+     320
+    ],
+    [
+     330,
+     290,
+     365,
+     320
+    ]
+   ]
+  },
+  {
+   "image_id": "ROCOv2_2023_train_000801",
+   "arrows": [],
+   "boxes": null
+  },
+  {
+   "image_id": "ROCOv2_2023_train_000293",
+   "arrows": [],
+   "boxes": [
+    [
+     260,
+     20,
+     370,
+     120
+    ]
+   ]
+  },
+  {
+   "image_id": "ROCOv2_2023_train_000144",
+   "arrows": [],
+   "boxes": [
+    [
+     255,
+     375,
+     290,
+     420
+    ]
+   ]
+  },
+  {
+   "image_id": "ROCOv2_2023_train_000374",
+   "arrows": [],
+   "boxes": [
+    [
+     180,
+     360,
+     270,
+     560
+    ]
+   ]
+  }
+ ]
+}
