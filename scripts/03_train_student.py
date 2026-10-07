@@ -20,7 +20,8 @@ from torch.utils.data import DataLoader
 from tqdm import tqdm
 
 from roco_medsam_test.common import PSEUDO_DIR, PROJECT_ROOT, fold_of, set_seed
-from roco_medsam_test.student import PseudoDataset, UNet, heat_loss, load_manifest, seg_loss
+from roco_medsam_test.student import (PseudoDataset, UNet, add_filter_args, filter_kwargs, heat_loss,
+                                      load_manifest, seg_loss)
 
 
 @torch.no_grad()
@@ -50,11 +51,7 @@ def main():
     ap.add_argument("--lr", type=float, default=3e-4)
     ap.add_argument("--workers", type=int, default=4)
     ap.add_argument("--heat_w", type=float, default=0.5)
-    ap.add_argument("--min_iou", type=float, default=0.8)
-    ap.add_argument("--min_gain", type=float, default=0.0)
-    ap.add_argument("--min_area", type=float, default=0.003)
-    ap.add_argument("--max_area", type=float, default=0.5)
-    ap.add_argument("--min_peak", type=float, default=0.0, help="min raw heat peak (see manifest heat_peak)")
+    add_filter_args(ap)
     ap.add_argument("--fold", type=int, default=-1, help="hold out this fold (cross-fitting)")
     ap.add_argument("--nfolds", type=int, default=2)
     ap.add_argument("--seed", type=int, default=0)
@@ -66,19 +63,20 @@ def main():
     out = PROJECT_ROOT / args.out
     out.mkdir(parents=True, exist_ok=True)
 
-    filt = dict(min_iou=args.min_iou, min_gain=args.min_gain, min_area=args.min_area,
-                max_area=args.max_area, min_peak=args.min_peak)
+    filt = filter_kwargs(args)
     tr = load_manifest(args.train_manifest, **filt)
     va = load_manifest(args.val_manifest, **filt)
     if args.fold >= 0:
         tr = tr[tr.image_id.map(lambda i: fold_of(i, args.nfolds) != args.fold)].reset_index(drop=True)
     print(f"train {len(tr)} ({(tr.kind=='normal').sum()} normal) | val {len(va)}")
     if len(tr) < args.bs or len(va) == 0:
-        raise SystemExit("Too few samples after filtering - loosen --min_iou/--min_gain or run steps 1-2 on more data.")
+        raise SystemExit("Too few samples after filtering - loosen --min_sep or run steps 1-2 on more data.")
 
     tl = DataLoader(PseudoDataset(tr, args.size, True), batch_size=args.bs, shuffle=True,
                     num_workers=args.workers, drop_last=True, persistent_workers=args.workers > 0)
-    vl = DataLoader(PseudoDataset(va, args.size, False), batch_size=args.bs, num_workers=args.workers)
+    # persistent workers: on Windows, re-spawning loader processes every epoch costs ~100 s (10x the epoch itself)
+    vl = DataLoader(PseudoDataset(va, args.size, False), batch_size=args.bs, num_workers=args.workers,
+                    persistent_workers=args.workers > 0)
 
     model = UNet(args.encoder, pretrained=True).to(device)
     opt = torch.optim.AdamW(model.parameters(), lr=args.lr, weight_decay=1e-4)

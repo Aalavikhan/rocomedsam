@@ -441,6 +441,7 @@ class Teacher:
         return {"mask": m, "anchors": [c["anchors"][0] for c in keep], "boxes": [c["box"] for c in keep],
                 "sam_iou": float(np.mean([c["sam_iou"] for c in keep])), "area_frac": float(m.mean()),
                 "box": top["box"], "heat_in": float(heat[m].mean()), "cover": float(heat[m].sum()) / heat_total,
+                "stab": float(np.mean([c["stab"] for c in keep])), "sep": float(np.mean([c["sep"] for c in keep])),
                 "score": top["score"]}
 
     # ---------------- main entry ----------------

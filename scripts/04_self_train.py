@@ -10,10 +10,19 @@ Rules for images with a kept teacher mask:
 Optional --add_confident: also add teacher-rejected images where the student is very confident
 (these have no text-derived heat target and get weight 0.5).
 
+--reweight (used for the reported results): keep every teacher mask and scale its weight by the agreement
+instead. Checked on the hand-boxed training images (data/dev/*.json) with ~0.24 pseudo-Dice fold students:
+drop_iou=0.2 removed 76% of findings although half of the removed teacher masks were good, and replaced masks
+were slightly worse than the teacher's (box IoU 0.675 -> 0.643); agreement itself is only weakly informative
+(AUROC 0.66), which suits a soft weight but not a hard filter.
+
     uv run python scripts/04_self_train.py --ckpts runs/s_f0/best.pt runs/s_f1/best.pt
     uv run python scripts/03_train_student.py --out runs/student_r1 \
         --train_manifest data/pseudo/manifest_train_r1.csv
-Use the SAME filter flags here as in step 3.
+    uv run python scripts/03b_train_sam_lora.py --out runs/sam_lora_r1 \
+        --train_manifest data/pseudo/manifest_train_r1.csv
+Use the SAME filter flags here as in step 3. Self-training always uses the UNet folds: the MedSAM student
+shares the teacher's model and would mostly confirm the teacher's own mistakes.
 """
 import argparse
 import sys
@@ -29,7 +38,7 @@ from scipy import ndimage as ndi
 from tqdm import tqdm
 
 from roco_medsam_test.common import PROJECT_ROOT, PSEUDO_DIR, dice_iou, fold_of, load_mask, load_rgb, rel
-from roco_medsam_test.student import load_manifest, load_student, predict_prob
+from roco_medsam_test.student import add_filter_args, filter_kwargs, load_manifest, load_student, predict_prob
 
 
 def largest_components(mask, keep_frac=0.2):
@@ -48,13 +57,12 @@ def main():
     ap.add_argument("--out_name", default="r1")
     ap.add_argument("--replace_iou", type=float, default=0.5)
     ap.add_argument("--drop_iou", type=float, default=0.2)
+    ap.add_argument("--reweight", action="store_true",
+                    help="no drop/replace: weight *= floor + (1-floor) * min(1, IoU/replace_iou)")
+    ap.add_argument("--reweight_floor", type=float, default=0.5)
     ap.add_argument("--add_confident", action="store_true")
     ap.add_argument("--conf", type=float, default=0.9)
-    ap.add_argument("--min_iou", type=float, default=0.8)
-    ap.add_argument("--min_gain", type=float, default=0.0)
-    ap.add_argument("--min_area", type=float, default=0.003)
-    ap.add_argument("--max_area", type=float, default=0.5)
-    ap.add_argument("--min_peak", type=float, default=0.0)
+    add_filter_args(ap)
     args = ap.parse_args()
 
     device = "cuda" if torch.cuda.is_available() else "cpu"
@@ -67,14 +75,13 @@ def main():
                              f"expected fold={i}, nfolds={nf}. Pass checkpoints in fold order.")
         models.append((m, size))
 
-    filt = dict(min_iou=args.min_iou, min_gain=args.min_gain, min_area=args.min_area,
-                max_area=args.max_area, min_peak=args.min_peak)
+    filt = filter_kwargs(args)
     full = pd.read_csv(args.manifest, dtype=str, keep_default_na=False)
     kept_ids = set(load_manifest(args.manifest, **filt).image_id)
     out_masks = PSEUDO_DIR / f"train_{args.out_name}" / "masks"
     out_masks.mkdir(parents=True, exist_ok=True)
 
-    rows, stats = [], {"replaced": 0, "kept_teacher": 0, "dropped": 0, "added": 0}
+    rows, stats = [], {"replaced": 0, "kept_teacher": 0, "dropped": 0, "added": 0, "reweighted": 0}
     for r in tqdm(full.itertuples(index=False), total=len(full), desc="refine"):
         d = r._asdict()
         if r.kind == "normal":
@@ -93,6 +100,12 @@ def main():
 
         if in_kept:
             _, iou = dice_iou(sm, load_mask(PROJECT_ROOT / r.mask_path))
+            if args.reweight:   # keep every teacher mask; trust it less where the held-out student disagrees
+                f = args.reweight_floor + (1 - args.reweight_floor) * min(1.0, iou / args.replace_iou)
+                d["weight"] = str(round(float(d["weight"] or 1.0) * f, 4))
+                stats["reweighted"] += 1
+                rows.append(d)
+                continue
             if iou < args.drop_iou:
                 stats["dropped"] += 1
                 continue
@@ -107,7 +120,7 @@ def main():
         elif conf >= args.conf and area_ok:
             p = out_masks / f"{r.image_id}.png"
             Image.fromarray(sm.astype(np.uint8) * 255).save(p)
-            d.update(mask_path=rel(p), heat_path="", status="ok", sam_iou="1.0", crop_gain="0.0",
+            d.update(mask_path=rel(p), heat_path="", status="ok", sam_iou="1.0", crop_gain="0.0", sep="9.9",
                      heat_peak="1.0", area_frac=str(area), weight="0.5")
             rows.append(d)
             stats["added"] += 1

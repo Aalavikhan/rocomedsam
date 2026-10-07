@@ -23,40 +23,17 @@ import numpy as np
 import pandas as pd
 import torch
 
-from roco_medsam_test.common import DATA, ROCO_DIR, load_rgb
+from roco_medsam_test.common import DATA, ROCO_DIR, box_metrics, load_rgb
 
 # dev = used to choose the mask-selection rule; holdout = the 31 other preview_v2 images, only checked
 SETS = {"dev": DATA / "dev" / "teacher_dev_gt.json", "holdout": DATA / "dev" / "seg_holdout_gt.json"}
 
 
-def box_metrics(mask, boxes):
-    H, W = mask.shape
-    gt = np.zeros((H, W), bool)
-    for x0, y0, x1, y1 in boxes:
-        gt[int(y0):int(y1), int(x0):int(x1)] = True
-    if not mask.any():
-        return dict(box_iou=0.0, inside=0.0, cover=0.0, found=False)
-    ys, xs = np.where(mask)
-    mb = [xs.min(), ys.min(), xs.max() + 1, ys.max() + 1]
-
-    def biou(a, b):
-        iw = max(0, min(a[2], b[2]) - max(a[0], b[0]))
-        ih = max(0, min(a[3], b[3]) - max(a[1], b[1]))
-        u = (a[2] - a[0]) * (a[3] - a[1]) + (b[2] - b[0]) * (b[3] - b[1]) - iw * ih
-        return iw * ih / max(u, 1e-6)
-    union = [min(b[0] for b in boxes), min(b[1] for b in boxes), max(b[2] for b in boxes), max(b[3] for b in boxes)]
-    ious = [biou(mb, b) for b in boxes] + ([biou(mb, union)] if len(boxes) > 1 else [])
-    best_box = boxes[int(np.argmax([biou(mb, b) for b in boxes]))]
-    g1 = np.zeros((H, W), bool)
-    g1[int(best_box[1]):int(best_box[3]), int(best_box[0]):int(best_box[2])] = True
-    return dict(box_iou=float(max(ious)), inside=float((mask & gt).sum() / mask.sum()),
-                cover=float((mask & g1).sum() / g1.sum()), found=bool((mask & gt).any()))
-
-
 def load_items(name):
     gt = json.loads(SETS[name].read_text())["images"]
     meta = pd.read_csv(ROCO_DIR / "train" / "metadata.csv", dtype=str, keep_default_na=False).set_index("image_id")
-    return [(g["image_id"], g["boxes"], meta.loc[g["image_id"]]) for g in gt if g["boxes"]]
+    return [(g["image_id"], g["boxes"], meta.loc[g["image_id"]]) for g in gt
+            if g["boxes"] and g["image_id"] in meta.index]
 
 
 def run_variants(teacher, items, variants, vis_dir=None):

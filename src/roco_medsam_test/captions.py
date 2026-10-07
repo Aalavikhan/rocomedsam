@@ -26,8 +26,27 @@ NON_RADIOLOGY = re.compile(
 MULTI_PANEL = re.compile(r"\(\s?[a-hA-H]\s?\)|(?<![\w])[a-hA-H]\)|\bpanels?\b|\brespectively\b")
 MARKED = re.compile(r"\barrow|asterisk|circle|star\b|dotted|outlined|encircled")
 # 'normal' deliberately NOT here: "normal liver with a hypodense lesion" still has a lesion
-NEG = re.compile(r"\b(no|without|absence of|negative for|ruled out|free of|resolved|resolution of)\b")
+NEG = re.compile(r"\b(no|without|absence of|negative for|ruled out|free of|resolved|resolution of|"
+                 r"resection of|removal of|excision of)\b")
+# negation AFTER the term, inside the same clause: "the tumor was completely removed", "nodule was not seen"
+POST_NEG = re.compile(r"^[^.;:()]{0,30}?\b(?:was|were|is|are|has been|have been|had been)\s+(?:completely\s+|totally\s+|"
+                      r"successfully\s+|entirely\s+)?(?:removed|resected|excised|resolved|absent|not\s+(?:seen|visible|"
+                      r"detected|identified|present|found|observed))\b")
+# the described finding is gone from the image (post-resection follow-up): no usable mask target
+REMOVED = re.compile(r"\b(?:completely|totally|successfully|entirely)\s+(?:removed|resected|excised)\b|"
+                     r"\bcomplete\s+(?:resection|removal|excision)\b|\b(?:was|were|has been|had been)\s+(?:removed|resected|excised)\b")
 NORMAL = re.compile(r"\b(normal|unremarkable)\b")
+# A 'normal' image becomes an EMPTY training target, so the caption must not mention anything abnormal,
+# post-operative or device-related, nor contrast the normal part with another part ("left normal, right ...").
+ABNORMAL_CUE = re.compile(
+    r"itis\b|megaly|ascit|anomal|supernumerar|vesicle|cataract|hyperintens|hypointens|hyperecho|hypoecho|"
+    r"hyperdens|hypodens|multiple|fluid|ectopic|fused|scoliosis|coarctation|occlu|ulcerat|contus|osteoly|insufficien|regurgit|"
+    r"flail|\bscar\b|enlarg|adenopath|prominent|abnormal|lesion|\bmass|tumou?r|fractur|disloc|break|discontinu|"
+    r"ha?ematoma|stent|catheter|prosthe|graft|repair|implant|post-?op|resect|metasta|cancer|carcinoma|hernia|"
+    r"aneurysm|stenos|thromb|infarct|o?edema|effusion|nodul|\bnodes?\b|schmorl|cyst|calcif|dilat|thicken|atroph|"
+    r"deform|truncated|staple|pouch|embolization|biopsy|infiltrat|patch|opacit|consolidat|collapse|"
+    r"\bexcept\b|however|\bbut\b|despite|although|whereas|compared|contrasted|\bversus\b|\bvs\b|other than|"
+    r"\bonly\b|mild|relatively|nearly|returns? to normal|normal:|normal variation|normal variant|≤|<|>")
 
 FINDING_STEMS = [
     r"nodules?", r"masses|mass", r"lesions?", r"tumou?rs?", r"opacit(?:y|ies)", r"consolidations?",
@@ -108,7 +127,7 @@ def extract_finding(caption: str):
     low = re.sub(r"\s+", " ", caption.lower())
     terms, first = set(), None
     for m in _TERM.finditer(low):
-        if NEG.search(_clause_before(low, m.start(), 40, r"[.;:()]")):
+        if NEG.search(_clause_before(low, m.start(), 40, r"[.;:()]")) or POST_NEG.match(low[m.end():]):
             continue
         # adjective such as "hyperintense" directly followed by a noun finding: let the noun win
         if re.match(r"hyper|hypo", m.group(0)) and _TERM.match(low[m.end():].lstrip()):
@@ -143,7 +162,7 @@ def classify(caption):
     if not isinstance(caption, str) or len(caption) < 15:
         return None
     low = caption.lower()
-    if NON_RADIOLOGY.search(low) or MULTI_PANEL.search(caption):
+    if NON_RADIOLOGY.search(low) or MULTI_PANEL.search(caption) or REMOVED.search(low):
         return None
     modality = detect_modality(caption)
     if modality is None:
@@ -153,7 +172,7 @@ def classify(caption):
     if f is not None:
         return {"modality": modality, "kind": "finding", "phrase": f["phrase"],
                 "term": f["term"], "n_terms": f["n_terms"], "marked": marked}
-    if NORMAL.search(low):
+    if NORMAL.search(low) and not ABNORMAL_CUE.search(low):
         return {"modality": modality, "kind": "normal", "phrase": "", "term": "", "n_terms": 0,
                 "marked": marked}
     return None

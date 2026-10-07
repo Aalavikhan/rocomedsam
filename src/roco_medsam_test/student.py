@@ -74,17 +74,42 @@ def predict_prob(model, img, size, device, tta=False):
     return p[0, 0].cpu().numpy()
 
 
-def load_manifest(path, min_iou=0.8, min_gain=0.0, min_area=0.003, max_area=0.5, min_peak=0.0):
+# Pseudo-label filter. Defaults were measured on 79 hand-boxed ROCO images (data/dev/*.json): MedSAM's own
+# sam_iou is worse than chance at spotting good masks (AUROC 0.36) and the CLIP crop_gain is at chance (0.51),
+# so both are off by default; the mask-vs-surround contrast `sep` is the best signal (AUROC 0.77):
+# sep >= 0.5 keeps ~55% of masks and raises the share of good masks (box IoU >= 0.5) from 41% to 63%.
+FILTER_DEFAULTS = dict(min_sep=0.5, min_iou=0.0, min_gain=None, min_area=0.003, max_area=0.5, min_peak=0.0)
+
+
+def add_filter_args(ap):
+    """The SAME filter flags for steps 3, 3b and 4 (they must agree, so they are defined once)."""
+    d = FILTER_DEFAULTS
+    ap.add_argument("--min_sep", type=float, default=d["min_sep"], help="min mask-vs-surround contrast (manifest sep)")
+    ap.add_argument("--min_iou", type=float, default=d["min_iou"], help="min MedSAM sam_iou (uninformative; 0 = off)")
+    ap.add_argument("--min_gain", type=float, default=d["min_gain"], help="min CLIP crop_gain (uninformative; off)")
+    ap.add_argument("--min_area", type=float, default=d["min_area"])
+    ap.add_argument("--max_area", type=float, default=d["max_area"])
+    ap.add_argument("--min_peak", type=float, default=d["min_peak"], help="min raw heat peak (manifest heat_peak)")
+
+
+def filter_kwargs(args):
+    return {k: getattr(args, k) for k in FILTER_DEFAULTS}
+
+
+def load_manifest(path, min_sep=0.5, min_iou=0.0, min_gain=None, min_area=0.003, max_area=0.5, min_peak=0.0):
     """Filter teacher output. Normal images (empty masks) are always kept."""
     df = pd.read_csv(path, dtype=str, keep_default_na=False)
     num = lambda c: pd.to_numeric(df[c], errors="coerce")  # noqa: E731
     is_norm = df.kind == "normal"
-    ok = (
-        (df.status == "ok")
-        & (num("sam_iou") >= min_iou)
-        & (num("crop_gain") >= min_gain)
-        & num("area_frac").between(min_area, max_area)
-    )
+    ok = (df.status == "ok") & num("area_frac").between(min_area, max_area)
+    if min_iou > 0:
+        ok &= num("sam_iou") >= min_iou
+    if min_gain is not None:
+        ok &= num("crop_gain") >= min_gain
+    if min_sep > 0:
+        if "sep" not in df:
+            raise SystemExit(f"{path} has no 'sep' column (made by an older teacher): re-run step 2 or pass --min_sep 0")
+        ok &= num("sep") >= min_sep
     if min_peak > 0 and "heat_peak" in df:
         ok &= num("heat_peak") >= min_peak
     return df[is_norm | ok].reset_index(drop=True)

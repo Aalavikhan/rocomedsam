@@ -30,7 +30,7 @@ from tqdm import tqdm
 from roco_medsam_test.common import PSEUDO_DIR, ROCO_DIR, load_rgb, rel, set_seed
 from roco_medsam_test.teacher import CLIP_METHOD, Teacher
 
-COLS = ["image_id", "split", "kind", "modality", "phrase", "status", "sam_iou", "heat_in", "heat_peak",
+COLS = ["image_id", "split", "kind", "modality", "phrase", "status", "sam_iou", "stab", "sep", "heat_in", "heat_peak",
         "area_frac", "clip_margin", "crop_gain", "weight", "n_arrows", "arrow_used",
         "image_path", "mask_path", "heat_path"]
 
@@ -145,12 +145,14 @@ def main():
                     cp = pdir / "images_clean" / f"{iid}.png"
                     Image.fromarray(res["clean_img"]).save(cp)
                     row["image_path"] = rel(cp)
-                # arrow-anchored masks are more trustworthy than a blurry heatmap alone: weight IoU higher
-                a = 0.7 if res["arrow_used"] else 0.5
-                row.update(status="ok", sam_iou=round(res["sam_iou"], 4), heat_in=round(res["heat_in"], 4),
+                # sample weight from the mask-vs-surround contrast (the best quality signal on the hand-boxed dev
+                # images; sam_iou was anti-correlated) and a bonus for arrow-anchored masks (good 68% vs 50%)
+                w = (0.4 + 0.6 * min(res["sep"] / 1.5, 1.0)) * (1.0 if res["arrow_used"] else 0.8)
+                row.update(status="ok", sam_iou=round(res["sam_iou"], 4), stab=round(res["stab"], 4),
+                           sep=round(res["sep"], 4), heat_in=round(res["heat_in"], 4),
                            heat_peak=round(res["heat_peak"], 4), area_frac=round(res["area_frac"], 5),
                            clip_margin=round(res["clip_margin"], 4), crop_gain=round(res["crop_gain"], 4),
-                           weight=round(float(np.clip(a * res["sam_iou"] + (1 - a) * res["heat_in"], 0.05, 1)), 4),
+                           weight=round(float(np.clip(w, 0.05, 1)), 4),
                            n_arrows=res["n_arrows"], arrow_used=res["arrow_used"],
                            mask_path=rel(mp), heat_path=rel(hp))
                 buf.append(row)
